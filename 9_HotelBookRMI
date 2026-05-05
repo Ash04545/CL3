@@ -1,0 +1,47 @@
+# Client --------------------------------------------------------------
+
+import xmlrpc.client
+
+proxy = xmlrpc.client.ServerProxy("http://localhost:8000/")
+
+print("1. Book Room")
+print("2. Cancel Booking")
+
+choice = int(input("Enter choice: "))
+guest = input("Enter guest name: ")
+
+if choice == 1:
+    print(proxy.book_room(guest))
+
+elif choice == 2:
+    print(proxy.cancel_booking(guest))
+
+
+# Server --------------------------------------------------------------
+
+from xmlrpc.server import SimpleXMLRPCServer
+
+bookings = set()
+
+def book_room(guest):
+    if guest in bookings:
+        return f"Booking already exists for {guest}"
+    
+    bookings.add(guest)
+    return f"Room booked for {guest}"
+
+def cancel_booking(guest):
+    if guest in bookings:
+        bookings.remove(guest)
+        return f"Booking cancelled for {guest}"
+    
+    return f"No booking found for {guest}"
+
+server = SimpleXMLRPCServer(("localhost", 8000))
+print("Hotel Booking Server Running...")
+
+server.register_function(book_room, "book_room")
+server.register_function(cancel_booking, "cancel_booking")
+
+server.serve_forever()
+
