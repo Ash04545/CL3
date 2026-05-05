@@ -1,0 +1,38 @@
+# Fuzzy Sets
+A = [0.2, 0.5, 0.7]
+B = [0.3, 0.6, 0.4]
+# Union
+union = [max(A[i], B[i]) for i in range(len(A))]
+# Intersection
+intersection = [min(A[i], B[i]) for i in range(len(A))]
+# Complement
+comp_A = [1 - x for x in A]
+# Difference A - B
+difference = [min(A[i], 1 - B[i]) for i in range(len(A))]
+print("Union:", union)
+print("Intersection:", intersection)
+print("Complement of A:", comp_A)
+print("Difference A-B:", difference)
+# Cartesian Product (Fuzzy Relation)
+R1 = [[min(a, b) for b in B] for a in A]
+print("\nCartesian Product (Relation R1):")
+for row in R1:
+    print(row)
+# Another Relation for Composition
+C = [0.8, 0.4]
+R2 = [[min(b, c) for c in C] for b in B]
+print("\nRelation R2:")
+for row in R2:
+    print(row)
+# Max-Min Composition
+composition = []
+for i in range(len(R1)):
+    row = []
+    for j in range(len(R2[0])):
+        val = max(min(R1[i][k], R2[k][j]) for k in range(len(R2)))
+        row.append(val)
+    composition.append(row)
+
+print("\nMax-Min Composition:")
+for row in composition:
+    print(row)
