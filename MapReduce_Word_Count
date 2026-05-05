@@ -1,0 +1,47 @@
+# Character Count using MapReduce concept
+
+from collections import defaultdict
+
+# Input text
+text = input("Enter text: ")
+
+# ---------------- MAP PHASE ----------------
+mapped = []
+for char in text:
+    if char != " ":
+        mapped.append((char, 1))
+
+# ---------------- REDUCE PHASE ----------------
+result = defaultdict(int)
+
+for key, value in mapped:
+    result[key] += value
+
+# Output
+print("\nCharacter Count:")
+for k, v in result.items():
+    print(k, ":", v)
+
+
+---------------------------------------------------<>---------------------------------------------------------------<>----------------------------------------------
+# Word Count using MapReduce concept
+
+from collections import defaultdict
+
+# Input text
+text = input("Enter text: ")
+
+# ---------------- MAP PHASE ----------------
+words = text.split()
+mapped = [(word, 1) for word in words]
+
+# ---------------- REDUCE PHASE ----------------
+result = defaultdict(int)
+
+for key, value in mapped:
+    result[key] += value
+
+# Output
+print("\nWord Count:")
+for k, v in result.items():
+    print(k, ":", v)
