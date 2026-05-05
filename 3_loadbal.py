@@ -1,3 +1,5 @@
+# LoadBal Code ---------------------------------------------------
+
 import random
 
 class Server:
@@ -31,3 +33,13 @@ for i in range(10):
     server = lb.get_server()
     server.handle_request()
     print(f"Request {i+1} assigned to {server.name}")
+
+# Create Server -----------------------------------------------
+
+servers = ["Server1", "Server2", "Server3"]
+
+requests = int(input("Enter number of client requests: "))
+
+for i in range(requests):
+    assigned_server = servers[i % len(servers)]
+    print(f"Request {i+1} assigned to {assigned_server}")
