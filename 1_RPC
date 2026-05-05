@@ -1,0 +1,27 @@
+# Client -----------------------------------------------------
+
+import xmlrpc.client
+
+proxy = xmlrpc.client.ServerProxy("http://localhost:8000/")
+
+num = int(input("Enter number: "))
+result = proxy.factorial(num)
+
+print("Factorial is:", result)
+
+# Server ------------------------------------------------------
+
+from xmlrpc.server import SimpleXMLRPCServer
+
+def factorial(n):
+    fact = 1
+    for i in range(1, n + 1):
+        fact = fact * i
+    return fact
+
+server = SimpleXMLRPCServer(("localhost", 8000))
+print("Server running on port 8000...")
+
+server.register_function(factorial, "factorial")
+
+server.serve_forever()
